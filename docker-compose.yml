@@ -1,44 +1,14 @@
 version: '3'
 services:
-  mysql:
-    build: ./mysql
-    image: 'cmyanko/mysql:5.7'
-    command: '--default-authentication-plugin=mysql_native_password'
-    restart: always
-    volumes:
-      - '~/.mysql:/var/lib/mysql'
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-
-  ssc:
-    image: 'cmyanko/ssc:18.10'
-    build: ./ssc-master
-    depends_on:
-      - mysql
-    ports:
-      - '8888:8080'
-    volumes:
-      - '~/.fortify_home:/usr/local/tomcat/fortify'
 
   iq-server:
-    image: 'cmyanko/my-iq-server:1.59.0'
+    image: 'sonatype/my-iq-server:1.59.0'
     build: ./iq-server
     volumes:
       - '~/iq-data:/sonatype-work'
     ports:
       - '8070:8070'
       - '8071:8071'
-
-  intSvc:
-    build: ./intSvc
-    depends_on:
-      - ssc
-      - iq-server
-    ports:
-      - '8182:8182'
-    volumes:
-      - '~/.intSvcWorkFolder:/home/nexus/.work'
-    image: 'cmyanko/nexus-ssc-integration:18.0.4'
 
   nginx-proxy:
     build: ./nginx
