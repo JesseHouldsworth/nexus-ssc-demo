@@ -2,7 +2,7 @@ version: '3'
 services:
 
   iq-server:
-    image: 'sonatype/my-iq-server:1.59.0'
+    image: 'sonatype/my-iq-server:1.60.0'
     build: ./iq-server
     volumes:
       - '~/iq-data:/sonatype-work'
